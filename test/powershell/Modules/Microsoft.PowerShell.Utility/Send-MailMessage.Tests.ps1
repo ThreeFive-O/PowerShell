@@ -3,6 +3,8 @@
 
 Describe "Send-MailMessage" -Tags CI {
     BeforeAll {
+        Register-PackageSource -Name nuget.org -Location https://www.nuget.org/api/v2 -ProviderName NuGet -ErrorAction SilentlyContinue
+
         $nugetPackage = "netDumbster"
         Find-Package $nugetPackage -ProviderName NuGet | Install-Package -Scope CurrentUser -Force
 
@@ -64,6 +66,8 @@ Describe "Send-MailMessage" -Tags CI {
     It "Can send mail message using named parameters <Name>" -TestCases $testCases {
         param($InputObject)
 
+        $server | Should -Not -Be $null
+
         Send-MailMessage @InputObject -ErrorAction SilentlyContinue
 
         $mail = Read-Mail
@@ -84,6 +88,8 @@ Describe "Send-MailMessage" -Tags CI {
         param($InputObject)
 
         Set-TestInconclusive "As of right now the Send-MailMessage cmdlet does not support piping named parameters (see issue 7591)"
+
+        $server | Should -Not -Be $null
 
         [PsCustomObject]$InputObject | Send-MailMessage -ErrorAction SilentlyContinue
 
