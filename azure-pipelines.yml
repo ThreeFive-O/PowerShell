@@ -117,7 +117,7 @@ jobs:
     displayName: Capture environment
     condition: succeededOrFailed()
 
-  - script: lsof -nP -i4TCP:$PORT | grep LISTEN
+  - script: lsof -iTCP -sTCP:LISTEN -n -P
     displayName: Get open ports
 
   - powershell:  Write-Host "##vso[build.updatebuildnumber]$env:BUILD_SOURCEBRANCHNAME-$env:BUILD_SOURCEVERSION-$((get-date).ToString("yyyyMMddhhmmss"))"
