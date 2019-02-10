@@ -3,17 +3,13 @@
 
 Describe "Send-MailMessage" -Tags CI, RequireSudoOnUnix {
     BeforeAll {
-        #Register-PackageSource -Name nuget.org -Location https://www.nuget.org/api/v2 -ProviderName NuGet -ErrorAction SilentlyContinue
-
         $nugetPackage = "netDumbster"
         Find-Package $nugetPackage -ProviderName NuGet | Install-Package -Scope CurrentUser -Force
 
         $dll = "$(Split-Path (Get-Package $nugetPackage).Source)\lib\netstandard2.0\netDumbster.dll"
         Add-Type -Path $dll
 
-        $port = 25
-        #$port = 2500
-        $server = [netDumbster.smtp.SimpleSmtpServer]::Start($port)
+        $server = [netDumbster.smtp.SimpleSmtpServer]::Start(25)
 
         function Read-Mail
         {
@@ -50,7 +46,6 @@ Describe "Send-MailMessage" -Tags CI, RequireSudoOnUnix {
                 Subject = "Subject $(Get-Date)"
                 Body = "Body $(Get-Date)"
                 SmtpServer = "127.0.0.1"
-                Port = $port
             }
         }
         @{
@@ -62,7 +57,6 @@ Describe "Send-MailMessage" -Tags CI, RequireSudoOnUnix {
                 Subject = "Subject $(Get-Date)"
                 Body = "Body $(Get-Date)"
                 SmtpServer = "127.0.0.1"
-                Port = $port
             }
         }
     )
