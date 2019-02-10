@@ -3,8 +3,6 @@
 
 Describe "Send-MailMessage" -Tags CI {
     BeforeAll {
-        #Register-PackageSource -Name nuget.org -Location https://www.nuget.org/api/v2 -ProviderName NuGet -Force
-
         $nugetPackage = "netDumbster"
         Find-Package $nugetPackage -ProviderName NuGet | Install-Package -Scope CurrentUser -Force
 
