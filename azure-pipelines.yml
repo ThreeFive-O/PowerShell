@@ -89,4 +89,4 @@ steps:
       Restore-PSOptions
       Invoke-AppveyorFinish -NuGetKey $(NUGET_KEY)
     displayName: Finish
-    condition: eq(variables['Purpose'], 'ElevatedPesterTests_xUnit_Packaging')# Starter pipeline
+    condition: eq(variables['Purpose'], 'ElevatedPesterTests_xUnit_Packaging')
