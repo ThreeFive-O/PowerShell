@@ -14,12 +14,20 @@ Describe "Send-MailMessage" -Tags CI {
         function Read-Mail
         {
             param()
-            return $server.ReceivedEmail[0]
+
+            if($server)
+            {
+                return $server.ReceivedEmail[0]
+            }
+            return $null
         }
     }
 
     AfterEach {
-        $server.ClearReceivedEmail()
+        if($server)
+        {
+            $server.ClearReceivedEmail()
+        }
     }
 
     AfterAll {
