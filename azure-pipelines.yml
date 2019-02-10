@@ -51,6 +51,9 @@ jobs:
     displayName: Capture environment
     condition: succeededOrFailed()
 
+  - script: netstat -tulpn
+    displayName: Get open ports
+
   - powershell: |
       # sometimes the file is locked and we must wait or things will fail
       $filePath = '/var/lib/dpkg/lock'
