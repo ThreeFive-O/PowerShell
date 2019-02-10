@@ -3,8 +3,10 @@
 
 Describe "Send-MailMessage" -Tags CI {
     BeforeAll {
+        Register-PackageSource -Name nuget.org -Location https://www.nuget.org/api/v2 -ProviderName NuGet
+
         $nugetPackage = "netDumbster"
-        Find-Package $nugetPackage -ProviderName NuGet | Install-Package -Scope CurrentUser
+        Find-Package $nugetPackage -ProviderName NuGet | Install-Package -Scope CurrentUser -Force
 
         $dll = "$(Split-Path (Get-Package $nugetPackage).Source)\lib\netstandard2.0\netDumbster.dll"
         Add-Type -Path $dll
@@ -16,30 +18,6 @@ Describe "Send-MailMessage" -Tags CI {
             param()
             return $server.ReceivedEmail[0]
         }
-
-        $testCases = @(
-            @{
-                Name = "with mandatory parameters"
-                InputObject = @{
-                    From = "user01@example.com"
-                    To = "user02@example.com"
-                    Subject = "Subject $(Get-Date)"
-                    Body = "Body $(Get-Date)"
-                    SmtpServer = "127.0.0.1"
-                }
-            }
-            @{
-                Name = "with ReplyTo"
-                InputObject = @{
-                    From = "user01@example.com"
-                    To = "user02@example.com"
-                    ReplyTo = "noreply@example.com"
-                    Subject = "Subject $(Get-Date)"
-                    Body = "Body $(Get-Date)"
-                    SmtpServer = "127.0.0.1"
-                }
-            }
-        )
     }
 
     AfterEach {
@@ -49,6 +27,30 @@ Describe "Send-MailMessage" -Tags CI {
     AfterAll {
         $server.Stop()
     }
+
+    $testCases = @(
+        @{
+            Name = "with mandatory parameters"
+            InputObject = @{
+                From = "user01@example.com"
+                To = "user02@example.com"
+                Subject = "Subject $(Get-Date)"
+                Body = "Body $(Get-Date)"
+                SmtpServer = "127.0.0.1"
+            }
+        }
+        @{
+            Name = "with ReplyTo"
+            InputObject = @{
+                From = "user01@example.com"
+                To = "user02@example.com"
+                ReplyTo = "noreply@example.com"
+                Subject = "Subject $(Get-Date)"
+                Body = "Body $(Get-Date)"
+                SmtpServer = "127.0.0.1"
+            }
+        }
+    )
 
     It "Can send mail message using named parameters <Name>" -TestCases $testCases {
         param($InputObject)
