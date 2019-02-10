@@ -11,7 +11,9 @@ Describe "Send-MailMessage" -Tags CI {
         $dll = "$(Split-Path (Get-Package $nugetPackage).Source)\lib\netstandard2.0\netDumbster.dll"
         Add-Type -Path $dll
 
-        $server = [netDumbster.smtp.SimpleSmtpServer]::Start(25)
+        $port = 25
+        $port = 2500
+        $server = [netDumbster.smtp.SimpleSmtpServer]::Start($port)
 
         function Read-Mail
         {
@@ -48,6 +50,7 @@ Describe "Send-MailMessage" -Tags CI {
                 Subject = "Subject $(Get-Date)"
                 Body = "Body $(Get-Date)"
                 SmtpServer = "127.0.0.1"
+                Port = $port
             }
         }
         @{
@@ -59,6 +62,7 @@ Describe "Send-MailMessage" -Tags CI {
                 Subject = "Subject $(Get-Date)"
                 Body = "Body $(Get-Date)"
                 SmtpServer = "127.0.0.1"
+                Port = $port
             }
         }
     )
