@@ -151,12 +151,6 @@ jobs:
   pool:
     name: Hosted VS2017
 
-  matrix:
-    UnelevatedPesterTests:
-      Purpose: UnelevatedPesterTests
-    ElevatedPesterTests_xUnit_Packaging:
-      Purpose: ElevatedPesterTests_xUnit_Packaging
-
   timeoutInMinutes: 120
 
   steps:
