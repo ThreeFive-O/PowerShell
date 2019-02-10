@@ -12,7 +12,7 @@ Describe "Send-MailMessage" -Tags CI {
         Add-Type -Path $dll
 
         $port = 25
-        $port = 2500
+        #$port = 2500
         $server = [netDumbster.smtp.SimpleSmtpServer]::Start($port)
 
         function Read-Mail
