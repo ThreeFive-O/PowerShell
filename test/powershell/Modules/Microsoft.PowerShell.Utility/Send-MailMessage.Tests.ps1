@@ -23,7 +23,10 @@ Describe "Send-MailMessage" -Tags CI {
     }
 
     AfterAll {
-        $server.Stop()
+        if($server)
+        {
+            $server.Stop()
+        }
     }
 
     $testCases = @(
