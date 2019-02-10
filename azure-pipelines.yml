@@ -179,7 +179,7 @@ jobs:
     - powershell: |
         Import-Module .\tools\ci.psm1
         Restore-PSOptions
-        Invoke-AppveyorTest -Purpose '$(Purpose)'
+        Invoke-AppveyorTest -Purpose UnelevatedPesterTests
       displayName: Test
       condition: succeeded()
     - powershell: |
@@ -188,9 +188,3 @@ jobs:
         Invoke-AppveyorAfterTest
       displayName: AfterTest
       condition: succeededOrFailed()
-    - powershell: |
-        Import-Module .\tools\ci.psm1
-        Restore-PSOptions
-        Invoke-AppveyorFinish -NuGetKey $(NUGET_KEY)
-      displayName: Finish
-      condition: eq(variables['Purpose'], 'ElevatedPesterTests_xUnit_Packaging')
