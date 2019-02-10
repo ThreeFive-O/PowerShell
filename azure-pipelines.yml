@@ -124,7 +124,7 @@ jobs:
     displayName: Set Build Name for Non-PR
     condition: ne(variables['Build.Reason'], 'PullRequest')
 
-  - template: ../tools/releaseBuild/azureDevOps/templates/insert-nuget-config-azfeed.yml
+  - template: /tools/releaseBuild/azureDevOps/templates/insert-nuget-config-azfeed.yml
 
   - powershell: |
       Import-Module ./tools/ci.psm1
