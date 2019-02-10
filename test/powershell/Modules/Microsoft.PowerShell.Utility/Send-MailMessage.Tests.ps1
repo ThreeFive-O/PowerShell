@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-Describe "Send-MailMessage" -Tags CI {
+Describe "Send-MailMessage" -Tags CI, RequireSudoOnUnix {
     BeforeAll {
         Register-PackageSource -Name nuget.org -Location https://www.nuget.org/api/v2 -ProviderName NuGet -ErrorAction SilentlyContinue
 
