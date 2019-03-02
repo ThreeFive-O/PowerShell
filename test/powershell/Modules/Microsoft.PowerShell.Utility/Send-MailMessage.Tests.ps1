@@ -6,7 +6,7 @@ Describe "Send-MailMessage" -Tags CI, RequireSudoOnUnix {
         Register-PackageSource -Name nuget.org -Location https://www.nuget.org/api/v2 -ProviderName NuGet -ErrorAction SilentlyContinue
 
         $nugetPackage = "netDumbster"
-        Find-Package $nugetPackage -ProviderName NuGet | Install-Package -Scope CurrentUser -Force
+        Install-Package -Name $nugetPackage -ProviderName NuGet -scope CurrentUser -Force
 
         $dll = "$(Split-Path (Get-Package $nugetPackage).Source)\lib\netstandard2.0\netDumbster.dll"
         Add-Type -Path $dll
